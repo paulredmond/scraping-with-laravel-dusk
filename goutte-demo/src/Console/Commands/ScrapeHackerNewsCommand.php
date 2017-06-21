@@ -9,6 +9,8 @@ class ScrapeHackerNewsCommand extends BaseCommand
 {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // @todo show a recursive link collector command example
+        // @todo collect 3 or 4 levels of links
         $crawler = $this->client->request('GET', 'https://news.ycombinator.com/');
         $links = $crawler->filter('a.storylink');
         $links->each(function ($node) use ($output) {
