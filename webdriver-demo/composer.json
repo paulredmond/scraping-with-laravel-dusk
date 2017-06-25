@@ -2,7 +2,8 @@
     "name": "predmond/webdriver-demo",
     "require": {
         "facebook/webdriver": "^1.4",
-        "symfony/process": "^3.3"
+        "symfony/process": "^3.3",
+        "laravel/dusk": "^1.1"
     },
     "authors": [
         {
