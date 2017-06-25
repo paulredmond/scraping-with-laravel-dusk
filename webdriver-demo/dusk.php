@@ -28,13 +28,15 @@ try {
     echo str_repeat("*", 50), "\n";
     echo wordwrap($text), "\n";
     echo str_repeat("*", 50), "\n\n";
-    
+
 } catch(Facebook\WebDriver\Exception\TimeOutException $timeout) {
     echo "Browser timed out waiting for an element.";
 } catch (\Exception $e) {
     echo $e->getMessage();
-    // $driver->quit();
+    $driver->quit();
 } finally {
+    // Close the browser
+    // $driver->quit();
     $chromeProcess->stop();
 }
 
