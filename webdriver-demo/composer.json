@@ -1,0 +1,13 @@
+{
+    "name": "predmond/webdriver-demo",
+    "require": {
+        "facebook/webdriver": "^1.4",
+        "symfony/process": "^3.3"
+    },
+    "authors": [
+        {
+            "name": "Paul Redmond",
+            "email": "paulrredmond@gmail.com"
+        }
+    ]
+}
