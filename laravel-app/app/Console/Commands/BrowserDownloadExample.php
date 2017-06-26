@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Browser;
+use League\Csv\Reader;
 use Illuminate\Console\Command;
 
 class BrowserDownloadExample extends Command
@@ -41,8 +42,9 @@ class BrowserDownloadExample extends Command
     public function handle()
     {
         $this->browser->browse(function ($browser) {
-            $browser->visit('https://support.spatialkey.com/spatialkey-sample-csv-data/');
-            $browser->element('a[href="http://samplecsvs.s3.amazonaws.com/SalesJan2009.csv"]')->click();
+            $browser->visit('https://www.microsoft.com/en-us/download/details.aspx?id=45485');
+            $browser->waitFor('.download-button');
+            $browser->element('.download-button')->click();
             $browser->waitUsing(10, 1, function () {
                 $file = $this->browser->downloadsManager->firstMatching(function ($downloadedFile) {
                     return $downloadedFile->getExtension() === 'csv';
@@ -54,6 +56,15 @@ class BrowserDownloadExample extends Command
             $csv = $this->browser->downloadsManager->firstMatching(function ($file) {
                 return $file->getExtension() == 'csv';
             });
+
+            // Process the CSV and output
+            $reader = Reader::createFromFileObject($csv->openFile());
+            $data = collect($reader->fetchAssoc(0));
+            $users = $data->map(function ($user) {
+                return $user['Display Name'];
+            })->toArray();
+
+            $this->info(implode("\n", $users));
         });
     }
 }
