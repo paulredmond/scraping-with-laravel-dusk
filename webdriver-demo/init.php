@@ -38,10 +38,11 @@ function buildChromeProcess() {
 
 function driver() {
     $options = (new ChromeOptions)->addArguments([]);
-
+    $capabilities = DesiredCapabilities::chrome()->setCapability(
+        ChromeOptions::CAPABILITY, $options
+    );
+    
     return RemoteWebDriver::create(
-        'http://localhost:9515', DesiredCapabilities::chrome()->setCapability(
-            ChromeOptions::CAPABILITY, $options
-        )
+        'http://localhost:9515', $capabilities, 5000, 10000
     );
 }

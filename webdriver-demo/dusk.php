@@ -10,20 +10,21 @@ try {
     $chromeProcess->start();
 
     // Create a RemoteWebDriver Instance
-    $driver = driver();
+    $driver = retry(5, function () {
+        return driver();
+    }, 50);
+
     $browser = new Browser($driver);
 
     $browser
-        ->visit('https://github.com')
-        ->click('button.site-header-toggle')
-        ->clickLink('Sign in')
-        ->waitFor('.auth-form-body')
-        ->type('login', 'user@example.com')
-        ->type('password', 'secret')
-        ->press('Sign in')
-        ->waitFor('#js-flash-container');
+        ->visit('http://174.138.38.208/wp-login.php')
+        ->waitFor('#loginform')
+        ->type('log', 'user@example.com')
+        ->type('pwd', 'secret')
+        ->press('#wp-submit')
+        ->waitFor('#login_error');
 
-    $text = $browser->text('#js-flash-container div.container');
+    $text = $browser->text('#login_error');
 
     echo str_repeat("*", 50), "\n";
     echo wordwrap($text), "\n";
@@ -33,7 +34,7 @@ try {
     echo "Browser timed out waiting for an element.";
 } catch (\Exception $e) {
     echo $e->getMessage();
-    $driver->quit();
+   // $driver->quit();
 } finally {
     // Close the browser
     // $driver->quit();

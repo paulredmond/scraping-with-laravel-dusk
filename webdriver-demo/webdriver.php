@@ -8,10 +8,13 @@ try {
     $chromeProcess->start();
 
     // Create a RemoteWebDriver Instance
-    $driver = driver();
+    $driver = retry(5, function () {
+        return driver();
+    }, 50);
 
     // Do automation...
-    $driver->get('https://github.com');
+    // This is for demonstration purposes. This will likely not be here when you try this.
+    $driver->get('http://174.138.38.208/wp-login.php');
 
     // Example of a timeout triggering an exception...
     // $driver->wait(10)->until(
@@ -23,43 +26,37 @@ try {
     // Wait for homepage
     $driver->wait(10)->until(
       Facebook\WebDriver\WebDriverExpectedCondition::presenceOfAllElementsLocatedBy(
-        Facebook\WebDriver\WebDriverBy::className('site-header-link')
-      )
-    );
-    
-    $driver->findElement(Facebook\WebDriver\WebDriverBy::className("site-header-toggle"))->click();
-    // Case Matters! This will fail.
-    // $driver->findElement(Facebook\WebDriver\WebDriverBy::partialLinkText("Sign In"))->click();
-    $driver->findElement(Facebook\WebDriver\WebDriverBy::partialLinkText("Sign in"))->click();
-
-    // Wait for login page
-    $driver->wait(10)->until(
-      Facebook\WebDriver\WebDriverExpectedCondition::presenceOfAllElementsLocatedBy(
-        Facebook\WebDriver\WebDriverBy::className('auth-form-body')
+        Facebook\WebDriver\WebDriverBy::id('loginform')
       )
     );
 
     // Login...
     // Username
-    $driver->findElement(Facebook\WebDriver\WebDriverBy::cssSelector('input[name="login"]'))->click();
+    $driver->findElement(Facebook\WebDriver\WebDriverBy::cssSelector('input[name="log"]'))->click();
     $driver->getKeyboard()->sendKeys('user@example.com');
 
     // Password
-    $driver->findElement(Facebook\WebDriver\WebDriverBy::cssSelector('input[name=password]'))->click();
+    $driver->findElement(Facebook\WebDriver\WebDriverBy::cssSelector('input[name=pwd]'))->click();
     $driver->getKeyboard()->sendKeys('secret');
 
+    // Checkbox Example
+    $remember = $driver->findElement(Facebook\WebDriver\WebDriverBy::cssSelector('input[name=rememberme]'));
+    if (!$remember->getAttribute('checked')) {
+        $remember->click();
+    }
+
     // Try to sign in
-    $driver->findElement(Facebook\WebDriver\WebDriverBy::cssSelector('input[type=submit][value="Sign in"]'))->click();
+    $driver->findElement(Facebook\WebDriver\WebDriverBy::cssSelector('#wp-submit'))->click();
 
     // Output the error message
     $driver->wait(10)->until(
       Facebook\WebDriver\WebDriverExpectedCondition::presenceOfAllElementsLocatedBy(
-        Facebook\WebDriver\WebDriverBy::id('js-flash-container')
+        Facebook\WebDriver\WebDriverBy::id('login_error')
       )
     );
     
     $text = $driver->findElement(
-        Facebook\WebDriver\WebDriverBy::cssSelector('#js-flash-container div.container')
+        Facebook\WebDriver\WebDriverBy::cssSelector('#login_error')
     )->getText();
 
     $text = wordwrap($text);
