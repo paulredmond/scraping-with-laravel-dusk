@@ -4,15 +4,18 @@ namespace App;
 
 use File;
 use Closure;
+use Alchemy\Zippy\Zippy;
 
 class DownloadsManager
 {
     private $downloadPath;
 
-    public function __construct($downloadPath)
+    private $archiver;
+
+    public function __construct($downloadPath, Zippy $archiver)
     {
         $this->downloadPath = $downloadPath;
-        $this->archiver = app('zippy');
+        $this->archiver = $archiver;
     }
 
     public function getDownloadsPath()
