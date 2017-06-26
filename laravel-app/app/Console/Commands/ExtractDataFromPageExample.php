@@ -65,10 +65,13 @@ class ExtractDataFromPageExample extends Command
                 $college = empty($player['College']) ? false : $player['College'];
                 
                 if ($college) {
-                    $this->info("{$player['Pos']}, from {$college}, number ${player['No.']}...{$name}!");
+                    $summary = "{$player['Pos']}, from {$college}, number ${player['No.']}...{$name}!";
                 } else {
-                    $this->info("{$player['Pos']}, number ${player['No.']}...{$name}!");
+                    $summary = "{$player['Pos']}, number ${player['No.']}...{$name}!";
                 }
+
+                $this->info($summary);
+                \Log::info($summary);
             });
         });
     }

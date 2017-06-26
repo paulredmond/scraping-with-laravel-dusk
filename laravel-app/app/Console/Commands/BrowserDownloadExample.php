@@ -65,6 +65,7 @@ class BrowserDownloadExample extends Command
             })->toArray();
 
             $this->info(implode("\n", $users));
+            \Log::info($users);
         });
     }
 }
