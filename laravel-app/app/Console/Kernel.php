@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('browser:download')->withoutOverlapping()->hourly();
-        $schedule->command('browser:extract')->withoutOverlapping()->everyMinute();
+        // $schedule->command('browser:extract')->withoutOverlapping()->everyMinute();
     }
 
     /**
