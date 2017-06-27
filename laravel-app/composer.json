@@ -7,6 +7,7 @@
     "require": {
         "php": ">=5.6.4",
         "alchemy/zippy": "^0.4.8",
+        "fabpot/goutte": "^3.2",
         "laravel/dusk": "^1.1",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
