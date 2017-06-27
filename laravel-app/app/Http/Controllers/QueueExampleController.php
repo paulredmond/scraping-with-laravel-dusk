@@ -13,6 +13,7 @@ class QueueExampleController extends Controller
             'url' => 'required|url'
         ]);
 
+        // Trigger a job to download the URL's HTML source
         dispatch(new DownloadHtml($request->input('url')));
 
         return response()->json(['status' => 'ok'], 202);
