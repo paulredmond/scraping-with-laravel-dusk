@@ -14,14 +14,23 @@ try {
         return driver();
     }, 50);
 
+    // Example Macroable trait usage...
+    // This is entirely unnecessary, except to demonstrate the macro feature
+    Browser::macro('wordPressLogin', function ($loginUrl, $log, $pwd) {
+        $this->visit($loginUrl)
+            ->waitFor('#loginform')
+            ->type('log', $log)
+            ->type('pwd', $pwd)
+            ->press('#wp-submit');
+
+        // Important if you want to chain this
+        return $this;
+    });
+
     $browser = new Browser($driver);
 
     $browser
-        ->visit('http://174.138.38.208/wp-login.php')
-        ->waitFor('#loginform')
-        ->type('log', 'user@example.com')
-        ->type('pwd', 'secret')
-        ->press('#wp-submit')
+        ->wordPressLogin('http://174.138.38.208/wp-login.php', 'user@example.com', 'secret')
         ->waitFor('#login_error');
 
     $text = $browser->text('#login_error');
