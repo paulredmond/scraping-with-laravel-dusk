@@ -34,7 +34,7 @@ try {
     echo "Browser timed out waiting for an element.";
 } catch (\Exception $e) {
     echo $e->getMessage();
-   // $driver->quit();
+    // $driver->quit();
 } finally {
     // Close the browser
     // $driver->quit();
