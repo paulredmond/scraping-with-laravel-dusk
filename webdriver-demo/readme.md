@@ -16,7 +16,7 @@ The [Laravel Dusk](https://github.com/laravel/dusk/) equivalent of the PHP-Webdr
 php dusk.php
 ```
 
-Equivalent code as the [dusk.php](./dusk.php) example, but using PhantomJS
+Equivalent code as the [dusk.php](./dusk.php) example, but using [PhantomJS](http://phantomjs.org/)
 ```
 php dusk-phantom.php
 ```
