@@ -1,7 +1,9 @@
 version: '3'
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
     image: dusk-demo-app
     container_name: dusk-demo-app
     privileged: true

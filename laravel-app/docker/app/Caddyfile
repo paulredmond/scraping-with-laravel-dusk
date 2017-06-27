@@ -1,0 +1,31 @@
+0.0.0.0
+root /srv/app/public
+browse
+gzip
+fastcgi / 127.0.0.1:9000 php
+rewrite {
+    r .*
+    ext /
+    to /index.php?{query}
+}
+
+expires {
+    match .css|.js$ 1y
+}
+
+# Remove the `Server: Caddy` header
+header / -Server
+
+# Long JavaScript expiry (1 year)
+header /js {
+  Cache-Control "public, max-age=31536000"
+}
+
+# Long CSS expiry (1 year)
+header /css {
+  Cache-Control "public, max-age=31536000"
+}
+
+log stdout
+errors stdout
+startup php-fpm &
