@@ -46,3 +46,23 @@ function driver() {
         'http://localhost:9515', $capabilities, 5000, 10000
     );
 }
+
+function buildPhantomProcess() {
+    $driver = realpath(__DIR__.'/bin/phantomjs-'.driverSuffix());
+    if (realpath($driver) === false) {
+        throw new RuntimeException("Invalid path to PhantomJS [{$driver}].");
+    }
+
+    return (new ProcessBuilder())
+            ->setPrefix(realpath($driver))
+            ->setArguments(['--webdriver=127.0.0.1:8910'])
+            ->getProcess();
+}
+
+function driverPhantom() {
+    $capabilities = DesiredCapabilities::phantomjs();
+    
+    return RemoteWebDriver::create(
+        'http://127.0.0.1:8910', $capabilities, 5000, 10000
+    );
+}
