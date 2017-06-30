@@ -1,3 +1,23 @@
+## Setup
+
+Just be aware that the scheduler _is_ running every minute, and will hit a site.
+```
+composer install
+cp .env.example .env
+php artisan key:generate
+docker-compose up --build
+```
+
+Bring docker back down if you are running it in the background:
+
+```
+# Stop the running containers if they are in the background
+docker-compose stop
+
+# Destroy all the things (db, etc)
+docker-compose down
+```
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
