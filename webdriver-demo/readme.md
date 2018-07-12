@@ -4,7 +4,7 @@ Summary:
 
 - `php webdriver.php`
 - `php dusk.php`
-- `php dusk-phantom.php`
+- `php dusk-phantomjs.php`
 
 Example code direcly using the [PHP-Webdriver](https://github.com/facebook/php-webdriver) library.
 ```
